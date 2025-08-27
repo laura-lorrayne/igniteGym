@@ -7,8 +7,7 @@ import {
 import { GluestackUIProvider, Text, Center } from "@gluestack-ui/themed";
 import { config } from "./config/gluestack-ui.config";
 import { Loading } from "@components/Loading";
-import { SignIn } from "@screens/Signin";
-import { SignUp } from "@screens/SignUp";
+import { Routes } from "@routes/index";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -23,7 +22,7 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded ? <SignUp /> : <Loading />}
+      {fontsLoaded ? <Routes /> : <Loading />}
     </GluestackUIProvider>
   );
 }
