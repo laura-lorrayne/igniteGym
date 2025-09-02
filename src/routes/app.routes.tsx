@@ -40,7 +40,7 @@ export function AppRoutes() {
         tabBarStyle: {
           backgroundColor: tokens.colors.gray600,
           borderTopWidth: 0,
-          //height: Platform.OS === "android" ? "auto" : 96,
+          // height: Platform.OS === "android" ? "auto" : 96,
           paddingBottom: tokens.space["10"],
           paddingTop: tokens.space["6"],
         },
@@ -55,7 +55,6 @@ export function AppRoutes() {
           ),
         }}
       />
-
       <Screen
         name="history"
         component={History}
@@ -65,7 +64,6 @@ export function AppRoutes() {
           ),
         }}
       />
-
       <Screen
         name="profile"
         component={Profile}
@@ -75,17 +73,13 @@ export function AppRoutes() {
           ),
         }}
       />
-    </Navigator>
-  );
-}
-/*
-
-<Screen
+      <Screen
         name="exercise"
         component={Exercise}
         options={{
           tabBarButton: () => null,
         }}
       />
-
-      */
+    </Navigator>
+  );
+}
