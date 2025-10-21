@@ -15,6 +15,9 @@ import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import api from "../service/api";
+import { AppError } from "@utils/AppError";
+import { useToast, Toast, ToastTitle } from "@gluestack-ui/themed";
 
 type FormDataProps = {
   name: string;
@@ -36,6 +39,7 @@ const signUpSchema = yup.object({
 });
 
 export function SignUp() {
+  const toast = useToast();
   const navigation = useNavigation();
   const {
     control,
@@ -49,17 +53,30 @@ export function SignUp() {
     navigation.goBack();
   }
   async function handleSignUp({ name, email, password }: FormDataProps) {
-    const response = await fetch("http://192.168.2.174:3333/users", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, email, password }),
-    });
+    try {
+      const response = await api.post("/users", {
+        name,
+        email,
+        password,
+      });
+      console.log(response.data);
+    } catch (error) {
+      const isAppError = error instanceof AppError;
 
-    const data = await response.json();
-    console.log(data);
+      const title = isAppError
+        ? error.message
+        : "Não foi possível criar a conta. Tente novamente mais tarde";
+
+      toast.show({
+        placement: "top",
+        render: () => (
+          <Toast backgroundColor="$red500" action="error" variant="outline">
+            <ToastTitle color="$white">{title}</ToastTitle>
+          </Toast>
+        ),
+      });
+      console.log(error);
+    }
   }
 
   return (
